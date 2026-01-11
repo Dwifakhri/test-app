@@ -1,0 +1,7 @@
+{
+  "/api": {
+    "target": "https://elc-onlinetest.incenplus.com",
+    "secure": false,
+    "changeOrigin": true
+  }
+}

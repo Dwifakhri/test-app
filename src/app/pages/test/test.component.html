@@ -1,0 +1,82 @@
+<div class="min-h-screen bg-gray-50">
+  <!-- NAVBAR -->
+  <app-navbar></app-navbar>
+
+  <!-- STEPPER -->
+  <app-stepper [steps]="steps" [currentStep]="currentStep"></app-stepper>
+
+  <div class="p-6">
+    <!-- LOADING STATE -->
+    <div *ngIf="isLoading" class="text-center py-8">
+      <p class="text-gray-600">Loading questions...</p>
+    </div>
+
+    <!-- NO QUESTIONS -->
+    <div *ngIf="!isLoading && questions.length === 0" class="text-center py-8">
+      <p class="text-red-600 font-medium">No questions found.</p>
+      <p class="text-sm text-gray-600 mt-2">
+        Please check the browser console (F12) for error details.
+      </p>
+    </div>
+
+    <!-- QUESTIONS CONTENT -->
+    <div *ngIf="!isLoading && questions.length > 0">
+      <div class="flex flex-col items-center justify-center p-8 font-sans text-center">
+        <h1 class="text-3xl font-bold text-[#C54133] mb-6">English Placement Test</h1>
+
+        <div class="max-w-2xl text-black space-y-2">
+          <p class="text-lg leading-relaxed">
+            Please read each sentence below and indicate your answer by clicking on the option. When
+            you are finished, click on the "Next" button at the bottom.
+          </p>
+        </div>
+      </div>
+
+      <!-- QUESTIONS GRID -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div
+          *ngFor="let q of paginatedQuestions; let i = index"
+          class="bg-white p-4 rounded-lg shadow"
+        >
+          <p class="font-medium mb-3">
+            {{ (currentPage - 1) * pageSize + i + 1 }}. {{ q.question }}
+          </p>
+
+          <div class="space-y-2">
+            <label
+              *ngFor="let opt of q.option"
+              class="flex items-center gap-2 text-sm cursor-pointer"
+            >
+              <input
+                type="radio"
+                [name]="'q' + q.id"
+                [value]="opt.id"
+                [checked]="isAnswerSelected(q.id, opt.id)"
+                (change)="onAnswerSelected(q.id, opt.id)"
+                class="text-blue-600"
+              />
+              <span>{{ opt.key }}. {{ opt.text }}</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGINATION -->
+      <div class="flex justify-between items-center mt-8">
+        <button
+          (click)="prevPage()"
+          [disabled]="currentPage === 1"
+          class="px-4 py-2 border rounded disabled:opacity-50"
+        >
+          Previous
+        </button>
+
+        <span class="text-sm"> Page {{ currentPage }} of {{ totalPages }} </span>
+
+        <button (click)="nextPage()" class="px-4 py-2 border rounded disabled:opacity-50">
+          Next
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,51 @@
+<div class="min-h-screen bg-gray-50">
+  <!-- NAVBAR -->
+  <app-navbar></app-navbar>
+
+  <!-- STEPPER -->
+  <app-stepper [steps]="steps" [currentStep]="currentStep"></app-stepper>
+
+  <!-- FORM -->
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 mt-6 sm:mt-12 mb-8">
+    <h2 class="text-center text-lg sm:text-xl font-semibold mb-6 sm:mb-8">Student Details</h2>
+
+    <form
+      [formGroup]="profileForm"
+      (ngSubmit)="submit()"
+      class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6"
+    >
+      <input formControlName="name" placeholder="Student Name (In English)" class="input w-full" />
+
+      <input
+        formControlName="email"
+        type="email"
+        placeholder="Email Address"
+        class="input w-full"
+      />
+
+      <input
+        formControlName="phone"
+        type="number"
+        placeholder="Phone Number"
+        class="input w-full"
+      />
+
+      <input formControlName="age" type="number" placeholder="Age" class="input w-full" />
+
+      <p class="text-xs sm:text-sm text-gray-600 md:col-span-2">
+        * Don't forget to claim your results at our InfoDay
+      </p>
+
+      <div class="md:col-span-2 flex justify-center md:justify-end">
+        <button
+          type="submit"
+          [disabled]="loading"
+          class="w-full md:w-auto px-6 py-2.5 sm:py-2 border border-blue-600 rounded-lg transition text-blue-600 hover:bg-blue-600 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-blue-600"
+        >
+          <span *ngIf="!loading">Next</span>
+          <span *ngIf="loading">Creating...</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
